@@ -9,22 +9,31 @@ on:
 jobs:
   build-and-analyze:
     name: Build and SonarCloud
-    runs-on: macos-13
+    runs-on: macos-13  # Aceasta este versiunea specifică de macOS (13.x) ce va fi folosită pentru runner.
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Aceasta asigură că întreg istoricul repo-ului este disponibil pentru build.
 
-      - name: Set up Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.1.app  # Asigură-te că folosești Xcode 16
+      - name: Set up Xcode 16.2
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.2.app  # Setează Xcode 16.2 dacă este instalat.
+          sudo xcodebuild -license accept  # Acceptă termenii licenței Xcode pentru a evita eventuale blocaje.
+          
+      - name: Install dependencies
+        run: |
+          gem install cocoapods  # Asigură-te că ai CocoaPods instalat, dacă e nevoie.
+          pod install  # Instalează dependențele proiectului, dacă folosești CocoaPods.
 
       - name: Build with xcodebuild
         run: |
           xcodebuild clean build \
             -project moldgag-ios-app-swift.xcodeproj \
             -scheme moldgag-ios-app-swift \
-            -destination 'platform=iOS Simulator,name=iPhone 16'
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -sdk iphonesimulator  # Folosește simulatorul pentru build.
 
       - name: Run SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -38,4 +47,4 @@ jobs:
             -Dsonar.exclusions=**/Pods/**,**/Tests/**
             -Dsonar.swift.coverage.reportPath=coverage.xml
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Token-ul SonarCloud pentru autentificare.
