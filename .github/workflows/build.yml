@@ -1,0 +1,41 @@
+name: Build and Analyze iOS App
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-analyze:
+    name: Build and SonarCloud
+    runs-on: macos-13  # sau macos-latest, dar Xcode 15.2+ e pe macos-13
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.2.app  # înlocuiește cu versiunea instalată dacă e necesar
+
+      - name: Build with xcodebuild
+        run: |
+          xcodebuild clean build \
+            -project moldgag-ios-app-swift.xcodeproj \
+            -scheme moldgag \
+            -destination 'platform=iOS Simulator,name=iPhone 15'
+
+      - name: Run SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=moldgag_moldgag-ios-app-swift
+            -Dsonar.organization=moldgag
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.sources=.
+            -Dsonar.language=swift
+            -Dsonar.exclusions=**/Pods/**,**/Tests/**
+            -Dsonar.swift.coverage.reportPath=coverage.xml
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
