@@ -23,7 +23,7 @@ jobs:
         run: |
           xcodebuild clean build \
             -project moldgag-ios-app-swift.xcodeproj \
-            -scheme moldgag \
+            -scheme moldgag-ios-app-swift \
             -destination 'platform=iOS Simulator,name=iPhone 15'
 
       - name: Run SonarCloud Scan
