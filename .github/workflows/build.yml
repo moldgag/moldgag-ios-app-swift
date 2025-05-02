@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-analyze:
     name: Build and SonarCloud
-    runs-on: self-hosted
+    runs-on: macos-13
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
