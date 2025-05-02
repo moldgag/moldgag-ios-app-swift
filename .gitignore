@@ -1,0 +1,71 @@
+# Xcode
+###################
+# iOS build products
+build/
+DerivedData/
+
+# Xcode workspace settings
+*.xcworkspace
+
+# Xcode project files
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcuserstate
+
+# User-specific Xcode settings
+*.xcuserstate
+*.xcuserdata/
+
+
+# Swift Package Manager
+###################
+# SwiftPM generated files
+.swiftpm/
+Packages/
+.xcworkspace/
+
+# CocoaPods
+###################
+# CocoaPods generated files
+Pods/
+Podfile.lock
+Podfile.private.lock
+
+# Carthage
+###################
+# Carthage generated files
+Carthage/
+
+# Fastlane
+###################
+# Fastlane generated files
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Derived Data
+###################
+DerivedData/
+
+# iOS-specific
+###################
+# iOS specific temporary files
+*.hmap
+*.ipa
+*.dSYM
+
+# Xcode-specific cache files
+*.moved-aside
+*.xcuserstate
+
+# Archives
+###################
+# Xcode archives
+*.xcarchive
+*.app.dSYM
+
+# Provisioning Profiles
+###################
+# iOS provisioning profile files
+*.mobileprovision
