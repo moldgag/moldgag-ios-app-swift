@@ -23,11 +23,6 @@ jobs:
           sudo xcode-select -s /Applications/Xcode.app  # Folosește Xcode-ul implicit disponibil pe runner
           sudo xcodebuild -license accept  # Acceptă termenii licenței Xcode dacă nu sunt deja acceptați
 
-      - name: Install dependencies
-        run: |
-          gem install cocoapods  # Asigură-te că ai CocoaPods instalat, dacă este nevoie.
-          pod install  # Instalează dependențele proiectului, dacă folosești CocoaPods.
-
       - name: Build with xcodebuild
         run: |
           xcodebuild clean build \
